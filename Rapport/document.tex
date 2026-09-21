@@ -1,0 +1,63 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{eurosym}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{lipsum}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+
+%Entéte
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\includegraphics[width=2cm]{Image/logo_Polytech_HORIZ_dijon}}
+\rhead{\today}
+\cfoot{Page \thepage}
+\begin{document}
+	\begin{titlepage}
+		\centering 
+		\includegraphics[width=0.3\textwidth]{Image/logo_Polytech_HORIZ_dijon}\par\vspace{1cm}
+		
+		%     En-tête 
+		{\scshape\LARGE Polytech Dijon \par}
+		\vspace{1cm}
+		
+		%     Titre 
+		\textcolor{blue}{\rule{\linewidth}{0.5mm}} \\[0.4cm] % Ligne horizontale supérieure
+		{ \huge \bfseries Computer Science \\[0.4cm] }
+		{\scshape\LARGE 3D Mesh \par}
+		\textcolor{blue}{\rule{\linewidth}{0.5mm}} \\[1,5cm] % Ligne horizontale inférieure
+		%     Sous-titre ou nature du document 
+		{\Large Rapport mi-parcours \par}
+		\vspace{2cm}
+		%     Auteurs et Superviseurs    
+		\begin{minipage}{0.40\textwidth}
+			\begin{flushleft} \large
+				\emph{Réalisé par :}\\
+				CLOIX Mattys\\
+				Rafin Alexandre 
+			\end{flushleft}
+		\end{minipage}
+		\hfill
+		\begin{minipage}{0.55\textwidth}
+			\begin{flushright} \large
+				\emph{Supervisé par :} \\
+				FOUGEROLLE Yohan \\
+				 
+				
+			\end{flushright}
+		\end{minipage}
+		\vfill 
+		% --- Date ---
+		{\large \today \par}
+	\end{titlepage}
+	
+	
+	\newpage
+	\tableofcontents
+	\newpage
+	\end{document}
