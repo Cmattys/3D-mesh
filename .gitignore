@@ -1,0 +1,11 @@
+# Ignorer le dossier de compilation CMake dans le sous-dossier code
+code/build/
+
+# Ignorer les exécutables et fichiers binaires (au cas où ils traînent ailleurs)
+*.o
+*.out
+*.so
+MeshViewer3D
+
+# Ignorer la configuration locale de Visual Studio Code
+.vscode/
