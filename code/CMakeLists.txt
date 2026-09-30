@@ -12,7 +12,7 @@ find_package(GLEW REQUIRED)
 
 # Définir l'exécutable (assure-toi d'avoir un fichier main.cpp)
 # Le code source est maintenant dans le dossier src/
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp src/FileReader.cpp)
 
 # Indiquer au compilateur où trouver tes futurs fichiers .h / .hpp
 target_include_directories(${PROJECT_NAME} PUBLIC include)
