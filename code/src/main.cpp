@@ -4,7 +4,7 @@
 
 int main() {
     // 1. Création de l'objet FileReader avec le nom de ton fichier
-    FileReader lecteur("../Fichier_obj/vaze2.OBJ");
+    FileReader lecteur("../Fichier_obj/jointure_v2.obj");
     Fill_Vector Tab (lecteur);
     Tab.export_data();
     return 0;

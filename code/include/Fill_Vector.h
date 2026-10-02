@@ -1,13 +1,14 @@
 #pragma once
 #include <vector>
+#include <array>
 #include "FileReader.h"
 
 class Fill_Vector
 {
 private:
-    std::vector<float> Point;
+    std::vector<std::array<float,3>> Point;
     int Vertex_count;
-    std::vector<int> Face;
+    std::vector<std::array<int,3>> Face;
     int Face_count;
     FileReader& reader;
     void export_size();
