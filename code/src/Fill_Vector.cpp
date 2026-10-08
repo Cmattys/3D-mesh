@@ -88,11 +88,11 @@ void Fill_Vector::export_data(){
     }
 
     //Debugage 
-    /*
+    
     std::cout<<"x : " <<Point[0][0]<<std::endl;
     std::cout<<"y : " <<Point[0][1]<<std::endl;
     std::cout<<"z : " <<Point[0][2]<<std::endl;
-    */
+    
 
     // On fait la même chose pour les faces
     while (current_line[0]!='f'){
