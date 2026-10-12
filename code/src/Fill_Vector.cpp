@@ -119,9 +119,16 @@ void Fill_Vector::export_data(){
         current_line=reader.Readline();
     }
     //Debug
-    /*
-    std::cout<<"F1 : " <<Face[825][0]<<std::endl;
-    std::cout<<"F2 : " <<Face[825][1]<<std::endl;
-    std::cout<<"F3 : " <<Face[825][2]<<std::endl;
-    */
+    
+    std::cout<<"F1 : " <<Face[0][0]<<std::endl;
+    std::cout<<"F2 : " <<Face[0][1]<<std::endl;
+    std::cout<<"F3 : " <<Face[0][2]<<std::endl;
+    
+}
+const std::vector<std::array<float,3>>& Fill_Vector::getPoints() const {
+    return Point;
+}
+
+const std::vector<std::array<int,3>>& Fill_Vector::getFaces() const {
+    return Face;
 }

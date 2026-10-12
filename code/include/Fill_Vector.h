@@ -15,5 +15,7 @@ private:
 public:
     Fill_Vector(FileReader& reader_name);
     void export_data();
+    const std::vector<std::array<float,3>>& getPoints() const;
+    const std::vector<std::array<int,3>>& getFaces() const;
 };
 
