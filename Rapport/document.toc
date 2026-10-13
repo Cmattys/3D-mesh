@@ -1,6 +1,10 @@
 \babel@toc {french}{}\relax 
 \contentsline {section}{\numberline {1}Introduction et Objectifs}{2}{}%
-\contentsline {section}{\numberline {2}Gestion de Projet : Diagramme de Gantt}{2}{}%
-\contentsline {section}{\numberline {3}Architecture Logicielle et UML}{2}{}%
-\contentsline {section}{\numberline {4}État d'avancement du projet}{5}{}%
-\contentsline {section}{\numberline {5}Analyse des Risques et Plans B}{5}{}%
+\contentsline {subsection}{\numberline {1.1}Introduction}{2}{}%
+\contentsline {subsection}{\numberline {1.2}Objectifs}{2}{}%
+\contentsline {section}{\numberline {2}Planification}{2}{}%
+\contentsline {section}{\numberline {3}Architecture Logicielle et UML}{3}{}%
+\contentsline {section}{\numberline {4}État d'avancement du projet}{6}{}%
+\contentsline {section}{\numberline {5}Analyse des Risques et Plans B}{6}{}%
+\contentsline {subsection}{\numberline {5.1}Problèmes}{6}{}%
+\contentsline {subsection}{\numberline {5.2}Solutions}{6}{}%

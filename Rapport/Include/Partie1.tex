@@ -1,13 +1,29 @@
 \section{Introduction et Objectifs}
+\subsection{Introduction}
+Ce projet de Computer Science a pour objectif de développer un éditeur de maillages 3D interactif en C++. Il aura pour but l'étude des structures de données, de la programmation orientée objet et de la représentation des objets géométriques en trois dimensions.
+\newline
+\newline
+L'application devra permettre d'importer des modèles 3D à partir de fichiers géométriques, avec par exemple le format \texttt{.obj}, puis de les représenter graphiquement à l'aide d'OpenGL. Pour assurer une gestion efficace des relations entre les sommets, les arêtes et les faces du maillage, nous utiliserons la structure de données Half-Edge.
+\newline
+\newline
+Le travail est a réalisé en binôme, avec pour objectif final de réussir à obtenir une application fonctionnelle, structurée et avec un compte rendu présenté au format LaTex.
 
+\subsection{Objectifs}
+L'objectif principal est de mettre en place un éditeur capable de visualiser et de modifier un maillage 3D tout en préservant la cohérence de sa structure. Plusieurs opérations topologiques sont ainsi prévues, comme la subdivision d'une arête, le retournement d'une arête ou encore la suppression de sommets et de faces suivant le besoin.
+\newline
+\newline
+De plus, il faudra mettre en pratique des principes de la programmation orientée objet et de la conception logicielle. Nous devrons, par conséquent, concevoir une architecture adaptée, organiser les différentes fonctionnalités et veiller à la fiabilité de l'application.
 
-\section{Gestion de Projet : Diagramme de Gantt}
+\section{Planification}
+Afin d'organiser le travail sur l'ensemble du projet, nous avons établi un diagramme de Gantt présentant les différentes étapes prévues pour notre développement. Ainsi, nous avons noté leurs ordres de réalisation ainsi que leur répartition dans le temps. De ce fait, cette planification nous permet de suivre l'avancement du projet et de répartir le travail entre les deux membres du binôme tout en connaissant la chronologie du projet.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{Image/Gantt}
-	\caption{Diagramme de Gant}
+	\caption{Diagramme de Gantt}
 	\label{fig:gantt}
 \end{figure}
+En outre, en complément de cette planification, nous avons créé un dépôt GitHub comme demandé dans le sujet afin de centraliser tout le travail demandé tel que le code source du projet, ce qui permet de faciliter le travail en binôme. Ceci nous permet de suivre les modifications apportées au code, de conserver un historique des versions et de coordonner le développement entre les deux membres du groupe.
 
 
 \section{Architecture Logicielle et UML}
@@ -41,3 +57,20 @@ La seconde partie est dédiée à OpenGL et au rendu graphique. Cette dernière 
 
 
 \section{Analyse des Risques et Plans B}
+\subsection{Problèmes}
+Plusieurs difficultés peuvent apparaître au cours du projet:
+\newline
+La structure Half-Edge peut être complexe à mettre en place et à maintenir cohérente.
+\newline
+L'utilisation d'OpenGL peut également poser des problèmes lors de l'affichage des maillages 3D.
+\newline
+Enfin, le développement en binôme peut entraîner des conflits de code ou des retards dans la réalisation des fonctionnalités.
+
+\subsection{Solutions}
+Il y a bien sûr différentes solutions pour éviter ces problèmes:
+\newline 
+Nous pouvons réaliser des tests réguliers afin de vérifier le bon fonctionnement du programme et en cas de problème avec certaines fonctionnalités, nous privilégierons une version plus simple permettant de conserver les fonctions essentielles du logiciel.
+\newline
+L'utilisation de GitHub nous permettra de partager le code et de suivre les modifications effectuées par chaque membre du binôme.
+\newline
+Enfin, pour les retards il suffit de se mettre au travail !
