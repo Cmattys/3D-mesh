@@ -3,6 +3,8 @@
 #include "Fill_Vector.h"
 #include "Mesh.h"
 
+
+
 int main() {
     // 1. Création de l'objet FileReader avec le nom de ton fichier
     FileReader lecteur("../Fichier_obj/jointure_v2.obj");

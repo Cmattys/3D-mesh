@@ -54,8 +54,15 @@ La seconde partie est dédiée à OpenGL et au rendu graphique. Cette dernière 
 \end{figure}
 
 \section{État d'avancement du projet}
+Après avoir structuré notre travail grâce à l'UML et l'avoir planifié grâce au Gantt, il ne nous restait plus qu'à implémenter les classes définies dans le diagramme.
+\newline
+\newline
+Dans un premier temps, nous avons réalisé l'importation des données contenues dans le fichier \texttt{.obj} à l'aide des classes \texttt{File\_Reader} et \texttt{fill\_Vector}. Ces classes permettent actuellement de récupérer uniquement les fichiers \texttt{.obj} exportés par MeshLab, notamment parce que le nombre de points et de faces y est explicitement renseigné.
 
-
+Dans un second temps, grâce au travail préalable effectué en TD sur la structure \textit{Half-Edge}, l'essentiel de la réflexion algorithmique était déjà posé. Il ne nous restait donc plus qu'à implémenter les classes \texttt{Mesh}, \texttt{Vertex}, \texttt{Face} et \texttt{HalfEdge}.
+\newline
+\newline
+Par conséquent il nous reste la bibliothèque OpenGL, qui nous permettra de concevoir l'interface de rendu 3D. Bien que nous n'ayons pas encore implémenté de fonctionnalités concrètes, nous avons téléchargé l'ensemble des dépendances nécessaires et configuré le fichier \texttt{CMakeLists.txt} afin d'assurer la compilation d'un programme exploitant la bibliothèque OpenGL.
 \section{Analyse des Risques et Plans B}
 \subsection{Problèmes}
 Plusieurs difficultés peuvent apparaître au cours du projet:
