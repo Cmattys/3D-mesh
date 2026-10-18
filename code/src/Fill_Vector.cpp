@@ -3,6 +3,7 @@
 #include <vector>
 #include <array>
 #include<iostream>
+#include <algorithm>
 
 Fill_Vector::Fill_Vector(FileReader& reader_name) : reader(reader_name){
 
@@ -118,12 +119,38 @@ void Fill_Vector::export_data(){
         Face[i]= {f1,f2,f3};
         current_line=reader.Readline();
     }
+
+    // Tri lexicographique des faces
+std::sort(Face.begin(), Face.end(),
+    [](const std::array<int, 3>& a,
+       const std::array<int, 3>& b)
+    {
+        if (a[0] != b[0])
+            return a[0] < b[0];
+
+        if (a[1] != b[1])
+            return a[1] < b[1];
+
+        return a[2] < b[2];
+    }
+);
     //Debug
     
     std::cout<<"F1 : " <<Face[0][0]<<std::endl;
     std::cout<<"F2 : " <<Face[0][1]<<std::endl;
     std::cout<<"F3 : " <<Face[0][2]<<std::endl;
     
+    std::cout << "3 premières faces apres tri pour test :"
+          << std::endl;
+
+for (int i = 0; i < 3 && i < Face.size(); i++)
+{
+    std::cout << "Face " << i << " : ("
+              << Face[i][0] << ", "
+              << Face[i][1] << ", "
+              << Face[i][2] << ")"
+              << std::endl;
+}
 }
 const std::vector<std::array<float,3>>& Fill_Vector::getPoints() const {
     return Point;
