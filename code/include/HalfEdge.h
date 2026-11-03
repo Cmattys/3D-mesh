@@ -1,8 +1,6 @@
 #pragma once
 
 
-#include <vector>
-
 // 1. Déclarations anticipées indispensables
 class Vertex;
 class Face;

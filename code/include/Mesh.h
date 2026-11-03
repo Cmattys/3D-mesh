@@ -12,9 +12,8 @@ private:
     std::vector<HalfEdge*> tabHE;
 
 public:
-    // Déclaration du constructeur
     Mesh(const std::vector<std::array<float, 3>>& V, const std::vector<std::array<int, 3>>& F);
-
-    // Déclaration du destructeur
+    const std::vector<Vertex*>& getVertices() const { return tabVertex; }
+    const std::vector<Face*>& getFaces() const { return tabFace; }
     ~Mesh();
 };

@@ -71,7 +71,34 @@ Mesh::Mesh(const std::vector<std::array<float, 3>>& V, const std::vector<std::ar
         tabHE[3 * i + 1] = pHE1;
         tabHE[3 * i + 2] = pHE2;
     }
+
     std::cout << "[DEBUG] Initialisation des half_edge terminée." << std::endl;
+
+    for (size_t i = 0; i < tabHE.size(); ++i) {
+        HalfEdge* he1 = tabHE[i];
+
+        // Sécurité (si une face avait été ignorée ou si la twin est déjà trouvée)
+        if (he1 == nullptr || he1->twin != nullptr) continue;
+
+        Vertex* depart1  = he1->next->next->target; // Sommet d'origine de he1
+        Vertex* arrivee1 = he1->target;             // Sommet cible de he1
+
+        for (size_t j = i + 1; j < tabHE.size(); ++j) {
+            HalfEdge* he2 = tabHE[j];
+            if (he2 == nullptr || he2->twin != nullptr) continue;
+
+            Vertex* depart2  = he2->next->next->target; // Sommet d'origine de he2
+            Vertex* arrivee2 = he2->target;             // Sommet cible de he2
+
+            // Si he2 fait le chemin exact inverse (arrivee1 -> depart1)
+            if (depart1 == arrivee2 && arrivee1 == depart2) {
+                he1->twin = he2;
+                he2->twin = he1;
+                break; // On a trouvé son jumeau, on passe au suivant !
+            }
+        }
+    }
+    std::cout << "[DEBUG] Liaison des twins terminée." << std::endl;
 }
 
 Mesh::~Mesh() {
