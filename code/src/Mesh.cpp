@@ -1,70 +1,73 @@
 #include "Mesh.h"
+#include <unordered_map>
+#include <iostream>
 
-// Mise à jour de la signature ici aussi
+// Foncteur de hachage pour une paire de pointeurs Vertex*
+struct PairVertexHash {
+    size_t operator()(const std::pair<Vertex*, Vertex*>& p) const {
+        // Hachage combiné classique (style boost::hash_combine)
+        size_t h1 = std::hash<Vertex*>{}(p.first);
+        size_t h2 = std::hash<Vertex*>{}(p.second);
+        return h1 ^ (h2 + 0x9e3779b9 + (h1 << 6) + (h1 >> 2));
+    }
+};
+
 Mesh::Mesh(const std::vector<std::array<float, 3>>& V, const std::vector<std::array<int, 3>>& F) {
-    std::cout << "[DEBUG] Début de la création du Mesh." << std::endl;
-    std::cout << "[DEBUG] Nombre de sommets reçus : " << V.size() << std::endl;
-    std::cout << "[DEBUG] Nombre de faces reçues : " << F.size() << std::endl;
+    std::cout << "[DEBUG] Debut creation Mesh." << std::endl;
+    std::cout << "[DEBUG] Sommets : " << V.size() << " | Faces : " << F.size() << std::endl;
+
     tabVertex.resize(V.size());
     for (size_t i = 0; i < V.size(); ++i) {
         Vertex* tmp = new Vertex();
-        tmp->x = V[i][0]; // L'accès avec crochets marche parfaitement avec std::array
+        tmp->x = V[i][0];
         tmp->y = V[i][1];
         tmp->z = V[i][2];
         tmp->he = nullptr;
         tabVertex[i] = tmp;
     }
-    std::cout << "[DEBUG] Initialisation des sommets terminée." << std::endl;
+
     tabFace.resize(F.size());
     for (size_t i = 0; i < F.size(); ++i) {
         Face* tmp = new Face();
         tmp->he = nullptr;
         tabFace[i] = tmp;
     }
-    std::cout << "[DEBUG] Initialisation des faces terminée." << std::endl;
+
     tabHE.resize(3 * F.size());
     for (size_t i = 0; i < F.size(); ++i) {
-        // On soustrait 1 pour passer de la base 1 (fichier OBJ) à la base 0 (C++)
         int v0 = F[i][0] - 1;
         int v1 = F[i][1] - 1;
         int v2 = F[i][2] - 1;
 
-        // Sécurité ultime pour éviter tout autre crash
-        if (v0 < 0 || v1 < 0 || v2 < 0 || v0 >= V.size() || v1 >= V.size() || v2 >= V.size()) {
-            std::cerr << "ERREUR : Indices de face hors limites pour la face " << i << std::endl;
-            continue; // Passe à la face suivante sans planter
+        if (v0 < 0 || v1 < 0 || v2 < 0 || v0 >= (int)V.size() || v1 >= (int)V.size() || v2 >= (int)V.size()) {
+            std::cerr << "ERREUR : Indices hors limites pour la face " << i << std::endl;
+            continue;
         }
 
         HalfEdge* pHE0 = new HalfEdge();
         HalfEdge* pHE1 = new HalfEdge();
         HalfEdge* pHE2 = new HalfEdge();
 
-        // Renseignement des cibles (Target) avec nos nouveaux indices corrigés
         pHE0->target = tabVertex[v1];
         pHE1->target = tabVertex[v2];
         pHE2->target = tabVertex[v0];
 
-        // Renseignement des suivants (Next)
         pHE0->next = pHE1;
         pHE1->next = pHE2;
         pHE2->next = pHE0;
 
-        // Renseignement des faces
         pHE0->face = tabFace[i];
         pHE1->face = tabFace[i];
         pHE2->face = tabFace[i];
-        
-        // Renseignement des jumeaux (Twin)
+
         pHE0->twin = nullptr;
         pHE1->twin = nullptr;
         pHE2->twin = nullptr;
 
-        // Liaison des sommets vers un de leurs Half-Edges
         if (tabVertex[v0]->he == nullptr) tabVertex[v0]->he = pHE0;
         if (tabVertex[v1]->he == nullptr) tabVertex[v1]->he = pHE1;
         if (tabVertex[v2]->he == nullptr) tabVertex[v2]->he = pHE2;
 
-        // Liaison de la face vers un de ses Half-Edges
         if (tabFace[i]->he == nullptr) tabFace[i]->he = pHE0;
 
         tabHE[3 * i + 0] = pHE0;
@@ -72,33 +75,38 @@ Mesh::Mesh(const std::vector<std::array<float, 3>>& V, const std::vector<std::ar
         tabHE[3 * i + 2] = pHE2;
     }
 
-    std::cout << "[DEBUG] Initialisation des half_edge terminée." << std::endl;
+    std::cout << "[DEBUG] Creation des HalfEdges terminee. Liaison des twins via Hash Map..." << std::endl;
+
+    // Table de hachage : Clé = (depart, arrivee), Valeur = HalfEdge*
+    std::unordered_map<std::pair<Vertex*, Vertex*>, HalfEdge*, PairVertexHash> edgeMap;
+    edgeMap.reserve(tabHE.size()); // Alloue directement la memoire pour eviter les rehashings
 
     for (size_t i = 0; i < tabHE.size(); ++i) {
-        HalfEdge* he1 = tabHE[i];
+        HalfEdge* he = tabHE[i];
+        if (he == nullptr) continue;
 
-        // Sécurité (si une face avait été ignorée ou si la twin est déjà trouvée)
-        if (he1 == nullptr || he1->twin != nullptr) continue;
+        Vertex* depart  = he->next->next->target;
+        Vertex* arrivee = he->target;
 
-        Vertex* depart1  = he1->next->next->target; // Sommet d'origine de he1
-        Vertex* arrivee1 = he1->target;             // Sommet cible de he1
+        // On cherche si la demi-arete opposee (arrivee -> depart) a deja ete vue
+        auto it = edgeMap.find({arrivee, depart});
 
-        for (size_t j = i + 1; j < tabHE.size(); ++j) {
-            HalfEdge* he2 = tabHE[j];
-            if (he2 == nullptr || he2->twin != nullptr) continue;
+        if (it != edgeMap.end()) {
+            // Jumeau trouve en O(1)
+            HalfEdge* twin = it->second;
+            he->twin = twin;
+            twin->twin = he;
 
-            Vertex* depart2  = he2->next->next->target; // Sommet d'origine de he2
-            Vertex* arrivee2 = he2->target;             // Sommet cible de he2
-
-            // Si he2 fait le chemin exact inverse (arrivee1 -> depart1)
-            if (depart1 == arrivee2 && arrivee1 == depart2) {
-                he1->twin = he2;
-                he2->twin = he1;
-                break; // On a trouvé son jumeau, on passe au suivant !
-            }
+            // Optionnel : on retire de la map car l'arete est complete
+            edgeMap.erase(it);
+        } else {
+            // Sinon on enregistre cette demi-arete
+            edgeMap[{depart, arrivee}] = he;
         }
     }
-    std::cout << "[DEBUG] Liaison des twins terminée." << std::endl;
+
+    std::cout << "[DEBUG] Liaison des twins terminee. Aretes de bord restantes (sans twin) : " 
+            << edgeMap.size() << std::endl;
 }
 
 Mesh::~Mesh() {

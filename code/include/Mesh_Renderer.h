@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include "Mesh.h"
 #include "Shader.h"
+#include "Camera.h"
 
 class Camera;
 
@@ -27,6 +28,6 @@ public:
 
     void set_buffer();
     void updateFromMesh(Mesh* mesh);
-    void draw(Camera* camera = nullptr);
+    void draw(Camera* camera);
     void setRenderMode(RenderMode mode); // Le setter officiel de ton UML !
 };

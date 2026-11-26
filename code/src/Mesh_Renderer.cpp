@@ -1,4 +1,5 @@
 #include "Mesh_Renderer.h"
+#include "Camera.h"
 #include <vector>
 #include <unordered_map>
 #include <glm/glm.hpp>
@@ -89,16 +90,10 @@ void Mesh_Renderer::setRenderMode(RenderMode mode) {
 void Mesh_Renderer::draw(Camera* camera) {
     shader->use();
 
-    // Matrices par défaut (Caméra reculée de 3 unités sur l'axe Z)
-    // Quand tu auras codé ta classe Camera, tu remplaceras ces 2 lignes par :
-    // glm::mat4 view = camera->getViewMatrix();
-    // glm::mat4 proj = camera->getProjectionMatrix(1280.0f / 720.0f);
-    glm::mat4 view = glm::lookAt(
-    glm::vec3(0.0f, 50.0f, 150.0f), // Recule la caméra (en mm)
-    glm::vec3(0.0f, 0.0f, 0.0f),    // Regarde l'origine
-    glm::vec3(0.0f, 1.0f, 0.0f)
-    );
-glm::mat4 proj = glm::perspective(glm::radians(45.0f), 1280.0f / 720.0f, 0.1f, 2000.0f);
+    // Récupération des matrices depuis l'instance de Camera
+    // On passe 2000.0f en farPlane pour conserver la visibilité à l'échelle en mm
+    glm::mat4 view = camera->getViewMatrix();
+    glm::mat4 proj = camera->getProjectionMatrix(1280.0f / 720.0f, camera->nearPlane, camera->farPlane);
 
     shader->setMat4("view", view);
     shader->setMat4("projection", proj);
@@ -114,7 +109,7 @@ glm::mat4 proj = glm::perspective(glm::radians(45.0f), 1280.0f / 720.0f, 0.1f, 2
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
 
-    // Dessin du maillage !
+    // Dessin du maillage
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);

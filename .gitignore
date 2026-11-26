@@ -6,6 +6,7 @@ code/build/
 *.out
 *.so
 *.OBJ
+*.obj
 MeshViewer3D
 
 # Ignorer la configuration locale de Visual Studio Code

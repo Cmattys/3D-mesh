@@ -123,7 +123,7 @@ void Fill_Vector::export_data(){
     // Tri lexicographique des faces
 std::sort(Face.begin(), Face.end(),
     [](const std::array<int, 3>& a,
-       const std::array<int, 3>& b)
+    const std::array<int, 3>& b)
     {
         if (a[0] != b[0])
             return a[0] < b[0];
@@ -141,15 +141,15 @@ std::sort(Face.begin(), Face.end(),
     std::cout<<"F3 : " <<Face[0][2]<<std::endl;
     
     std::cout << "3 premières faces apres tri pour test :"
-          << std::endl;
+        << std::endl;
 
 for (int i = 0; i < 3 && i < Face.size(); i++)
 {
     std::cout << "Face " << i << " : ("
-              << Face[i][0] << ", "
-              << Face[i][1] << ", "
-              << Face[i][2] << ")"
-              << std::endl;
+            << Face[i][0] << ", "
+            << Face[i][1] << ", "
+            << Face[i][2] << ")"
+            << std::endl;
 }
 }
 const std::vector<std::array<float,3>>& Fill_Vector::getPoints() const {
